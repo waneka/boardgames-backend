@@ -1,0 +1,27 @@
+enum Permission {
+  ADMIN
+  USER
+}
+
+type User {
+  id: ID! @id
+  username: String!
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission] @scalarList(strategy: RELATION)
+}
+
+type Game {
+  id: ID! @id
+  name: String!
+  radioMilestone: Boolean
+  cfoMilestone: Boolean
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  currentTurn: Int @default(value: 0)
+  currentPhase: String @default(value: "SETUP_0")
+  createdBy: User! @relation(name: "CreatedByUser")
+  players: [User]! @relation(name: "UserInGame")
+}

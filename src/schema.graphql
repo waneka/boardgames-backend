@@ -1,0 +1,38 @@
+# import * from './generated/prisma.graphql'
+type SuccessMessage {
+  message: String!
+}
+
+input PlayerInput {
+  id: ID!
+  username: String
+}
+
+type Mutation {
+  createGame(
+    name: String!
+    radioMilestone: Boolean
+    cfoMilestone: Boolean
+    currentTurn: Int
+    currentPhase: String
+    players: [PlayerInput]!
+  ): Game!
+  signup(email: String!, password: String!, username: String!): User!
+  signin(email: String!, password: String!): User!
+  signout: SuccessMessage
+  requestReset(email: String!): SuccessMessage
+  resetPassword(password: String!, resetToken: String!): User!
+}
+
+type Query {
+  games: [Game]
+  me: User
+  usersByUsername(searchValue: String!): [User]
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  permissions: [Permission!]!
+}
