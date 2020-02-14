@@ -38,6 +38,8 @@ const mutations = {
       info
     );
 
+    console.log("yup");
+
     return game;
   },
   async signup(parent, args, ctx, info) {
