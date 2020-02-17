@@ -53,5 +53,6 @@ type Game {
   cfoMilestone: Boolean
   currentTurn: Int
   currentPhase: String
+  updatedAt: DateTime!
   players: [User]!
 }
