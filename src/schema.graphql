@@ -8,6 +8,11 @@ input PlayerInput {
   username: String
 }
 
+type Subscription {
+  gameEvent(gameId: ID!): GameEventSubscriptionPayload!
+  game(where: GameSubscriptionWhereInput): GameSubscriptionPayload!
+}
+
 type Mutation {
   createGame(
     name: String!

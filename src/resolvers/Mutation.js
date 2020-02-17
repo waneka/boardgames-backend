@@ -38,9 +38,38 @@ const mutations = {
       info
     );
 
-    console.log("yup");
-
     return game;
+  },
+  async createGameEvent(parent, args, ctx, info) {
+    const event = await ctx.db.mutation.createGameEvent(
+      {
+        data: {
+          type: args.type,
+          game: {
+            connect: {
+              id: args.gameId
+            }
+          }
+        }
+      },
+      info
+    );
+    // 3. return event
+
+    return event;
+  },
+  async updateGame(parent, args, ctx, info) {
+    return await ctx.db.mutation.updateGame(
+      {
+        data: {
+          name: args.name
+        },
+        where: {
+          id: args.id
+        }
+      },
+      info
+    );
   },
   async signup(parent, args, ctx, info) {
     args.email = args.email.toLowerCase();

@@ -3,6 +3,33 @@ enum Permission {
   USER
 }
 
+enum GameEventType {
+  CREATE_BOARD
+  ORDER_OF_BUSINESS
+  PLACE_RESTAURANT
+  PICK_RESERVE_CARD
+  RESTRUCTURE
+  HIRE
+  TRAIN
+  INITIATE_MARKETING_CAMPAIGN
+  PRODUCE_GOODS
+  PLACE_HOUSE
+  PLACE_GARDEN
+  MOVE_RESTAURANT
+  FIRE
+  ADD_TO_FREEZER
+  # These events do not include any user action, and may be able to be inferred.
+  RESOLVE_HOUSE
+  PAY_WAITRESSES
+  APPLY_CFO_BONUS
+  PAY_SALARY
+  APPLY_MARKETING_CAMPAIGN
+  TRASH_FOOD
+  OPEN_RESTAURANT
+  DISTRIBUTE_MILESTONE
+  DISABLE_MILESTONE
+}
+
 type User {
   id: ID! @id
   username: String!
@@ -24,4 +51,11 @@ type Game {
   currentPhase: String @default(value: "SETUP_0")
   createdBy: User! @relation(name: "CreatedByUser")
   players: [User]! @relation(name: "UserInGame")
+  events: [GameEvent] @relation(name: "GameForGameEvent")
+}
+
+type GameEvent {
+  id: ID! @id
+  game: Game! @relation(name: "GameForGameEvent")
+  type: GameEventType!
 }

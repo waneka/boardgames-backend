@@ -2,6 +2,7 @@ const { forwardTo } = require("prisma-binding");
 
 const Query = {
   games: forwardTo("db"),
+  game: forwardTo("db"),
   me(parent, args, ctx, info) {
     if (!ctx.request.userId) return null;
     return ctx.db.query.user(
@@ -15,7 +16,10 @@ const Query = {
     return ctx.db.query.users(
       {
         where: {
-          username_contains: searchValue
+          AND: [
+            { username_contains: searchValue },
+            { id_not: ctx.request.userId }
+          ]
         }
       },
       info
