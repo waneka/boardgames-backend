@@ -27,10 +27,13 @@ type Mutation {
   signout: SuccessMessage
   requestReset(email: String!): SuccessMessage
   resetPassword(password: String!, resetToken: String!): User!
+  createGameEvent(type: GameEventType!, gameId: ID!): GameEvent!
+  updateGame(id: ID!, name: String): Game!
 }
 
 type Query {
   games: [Game]
+  game(where: GameWhereUniqueInput!): Game
   me: User
   usersByUsername(searchValue: String!): [User]
 }
@@ -40,4 +43,15 @@ type User {
   username: String!
   email: String!
   permissions: [Permission!]!
+}
+
+type Game {
+  id: ID!
+  name: String!
+  events: [GameEvent]
+  radioMilestone: Boolean
+  cfoMilestone: Boolean
+  currentTurn: Int
+  currentPhase: String
+  players: [User]!
 }

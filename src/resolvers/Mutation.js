@@ -12,9 +12,13 @@ const mutations = {
     const playerIds = args.players.map(player => player.id);
     const users = await ctx.db.query.users({
       where: {
-        id_in: playerIds
+        id_in: [...playerIds, ctx.request.userId]
       }
     });
+
+    if (users.length > 5) {
+      throw new Error(`Too many playas`);
+    }
 
     const scrubbedUserData = users.map(user => ({
       id: user.id,
